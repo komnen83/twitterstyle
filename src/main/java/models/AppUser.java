@@ -33,7 +33,17 @@ public class AppUser {
     inverseJoinColumns = {@JoinColumn(name = "followed_fk")})
     private Set<AppUser> following = new HashSet<>();
 
+    private boolean isActive;
+
     public AppUser() {
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
     }
 
     public Long getId() {
@@ -128,10 +138,12 @@ public class AppUser {
                 ", login='" + login + '\'' +
                 ", email='" + email + '\'' +
                 ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", registerdSince=" + registerdSince +
                 ", followers=" + followers +
                 ", following=" + following +
+                ", active=" + isActive +
                 '}';
     }
 
@@ -178,6 +190,7 @@ public class AppUser {
             user.setName(this.name);
             user.setLastName(this.lastName);
             user.setEmail(this.email);
+            user.setIsActive(true);
             return user;
         }}
 }

@@ -1,6 +1,6 @@
 package dao.impl;
 
-import dao.AbstractAppUserDao;
+import dao.AbstractMySQLDao;
 import dao.AppUserDao;
 import models.AppUser;
 
@@ -8,12 +8,13 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class MySQLUserDao extends AbstractAppUserDao implements AppUserDao {
+public class MySQLUserDao extends AbstractMySQLDao implements AppUserDao {
 
     @Override
     public HashSet<AppUser> getAll() {
-        TypedQuery<AppUser> getAll = em.createQuery("from AppUser", AppUser.class);
+        TypedQuery<AppUser> getAll = em.createQuery("select u from AppUser u where u.isActive = true ", AppUser.class);
         List<AppUser> resultList = getAll.getResultList();
         return new HashSet<>(resultList);
     }
@@ -25,13 +26,14 @@ public class MySQLUserDao extends AbstractAppUserDao implements AppUserDao {
 
     @Override
     public void deleteUser(AppUser user) {
-        unfollowBeforeDelete(user);
-        hibernateUtil.delete(AppUser.class, user.getId());
+//        unfollowBeforeDelete(user);
+//        hibernateUtil.delete(AppUser.class, user.getIsActive());
+        user.setIsActive(false);
     }
 
     @Override
     public AppUser getUserById(Long id) {
-        TypedQuery<AppUser> query = em.createQuery("select u from AppUser u where u.id=:id", AppUser.class);
+        TypedQuery<AppUser> query = em.createQuery("select u from AppUser u where u.id=:id ", AppUser.class);
         query.setParameter("id", id);
         return query.getSingleResult();
     }
@@ -57,16 +59,16 @@ public class MySQLUserDao extends AbstractAppUserDao implements AppUserDao {
 
     @Override
     public HashSet<AppUser> getNotFollowedUser(AppUser loggedUser) {
-        Query query = em.createQuery("select u from AppUser u where u not in :followed");
+        Query query = em.createQuery("select u from AppUser u where u not in :followed and u.isActive = true", AppUser.class);
         query.setParameter("followed", new HashSet(loggedUser.getFollowing()));
         return new HashSet(query.getResultList());
     }
 
     @Override
     public HashSet<AppUser> getFollowers(AppUser loggedUser) {
-        Query query = em.createQuery("select followers from AppUser u where u.id = :userId");
-        query.setParameter("userId", loggedUser.getId());
-        return new HashSet<>(query.getResultList());
+        TypedQuery<AppUser> query = em.createQuery("select followers from AppUser u where u.id = :userID", AppUser.class);
+        query.setParameter("userID", loggedUser.getId());
+        return new HashSet<>(query.getResultList().stream().filter(o -> o.isActive()).collect(Collectors.toSet()));
     }
 
     @Override
@@ -84,4 +86,5 @@ public class MySQLUserDao extends AbstractAppUserDao implements AppUserDao {
     private void unfollowBeforeDelete(AppUser user) {
         getFollowers(user).forEach(follower -> unfollow(follower, user));
     }
+
 }
