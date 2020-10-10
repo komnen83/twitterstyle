@@ -4,6 +4,7 @@ import models.AppUser;
 import models.Tweet;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface TweetDao {
     void save(Tweet tweet);
@@ -12,6 +13,6 @@ public interface TweetDao {
 
     List<Tweet> getUserTweets(AppUser user);
 
-    Tweet getTweet(Long id);
+    Optional<Tweet> getTweet(Long id);
 
 }

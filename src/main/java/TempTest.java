@@ -50,7 +50,7 @@ public class TempTest {
         System.out.printf("Followed of user1 ");
         dao.getFollowedUsers(user1).forEach(System.out::println);
         System.out.printf("Followers of user2 ");
-        dao.getFollowers(user2).forEach(System.out::println);
+//        dao.getFollowers(user2).forEach(System.out::println);
 
         dao.getAll().forEach(System.out::println);
 
