@@ -21,12 +21,11 @@ public interface AppUserDao {
 
     HashSet<AppUser> getFollowedUsers(AppUser loggedUser);
 
-    HashSet<AppUser> getNotFollowedUser(AppUser loggedUser);
+    HashSet<AppUser> getNotFollowedUsers(AppUser loggedUser);
 
     HashSet<AppUser> getFollowers(AppUser loggedUser);
 
     void follow(AppUser logged, AppUser userToFollow);
 
     void unfollow(AppUser logged, AppUser userToFollow);
-
 }

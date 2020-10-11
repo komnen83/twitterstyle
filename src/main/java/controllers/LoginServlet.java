@@ -32,6 +32,7 @@ public class LoginServlet extends HttpServlet {
         String login = null;
         String password = null;
 
+        // checking if cookies are delivered with request
         if (req.getCookies() != null) {
             for (Cookie c : req.getCookies()) {
                 if (c.getName().equals(ServletUtils.USER_LOGIN)) {
@@ -43,6 +44,7 @@ public class LoginServlet extends HttpServlet {
             }
         }
 
+        // if login and password are no longer nulls it means that they were loaded form cookies in for loop above.
         if (login != null && password != null) {
             req.setAttribute(ServletUtils.USER_LOGIN, login);
             req.setAttribute(ServletUtils.USER_PASSWORD, password);
@@ -50,7 +52,7 @@ public class LoginServlet extends HttpServlet {
             return;
         }
 
-        req.getRequestDispatcher("login.jsp").forward(req, resp);
+        req.getRequestDispatcher("/login.jsp").forward(req, resp);
     }
 
     @Override
@@ -66,7 +68,6 @@ public class LoginServlet extends HttpServlet {
             hashedPassword = DigestUtils.md5Hex(password);
         }
 
-
         boolean credsInvalid = !service.isLoginAndPasswordValid(login, hashedPassword);
         if (credsInvalid) {
             ValidationError validationError = new ValidationError(ServletUtils.LOGIN_ERROR_HEADER, ServletUtils.WRONG_PASSWORD_ERROR_MESSAGE);
@@ -78,12 +79,11 @@ public class LoginServlet extends HttpServlet {
         }
 
         String remember = req.getParameter(ServletUtils.REMEMBER);
-
         if (isCheckboxChecked(remember)) {
             addCookies(resp, login, hashedPassword);
         }
         req.getSession().setAttribute(ServletUtils.USER_LOGIN, login);
-        req.getRequestDispatcher("/users.jsp").forward(req, resp);
+        req.getRequestDispatcher("users").forward(req, resp);
     }
 
     private boolean isCheckboxChecked(String remember) {

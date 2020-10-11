@@ -11,18 +11,17 @@ public class Tweet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String message;
     @Column(name = "published_at")
     @CreationTimestamp
     private Date publishedAt;
-
+    private String message;
 
     private String author;
 
     public Tweet() {
     }
 
-    public Tweet(String author, String message) {
+    public Tweet(String author,  String message) {
         this.author = author;
         this.message = message;
     }
@@ -35,12 +34,12 @@ public class Tweet {
         this.id = id;
     }
 
-    public String getAuthor() {
-        return author;
+    public Date getPublishedAt() {
+        return publishedAt;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setPublishedAt(Date publishedAt) {
+        this.publishedAt = publishedAt;
     }
 
     public String getMessage() {
@@ -51,20 +50,20 @@ public class Tweet {
         this.message = message;
     }
 
-    public Date getPublishedAt() {
-        return publishedAt;
+    public String getAuthor() {
+        return author;
     }
 
-    public void setPublishedAt(Date publishedAt) {
-        this.publishedAt = publishedAt;
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     @Override
     public String toString() {
         return "Tweet{" +
                 "id=" + id +
-                ", message='" + message + '\'' +
                 ", publishedAt=" + publishedAt +
+                ", message='" + message + '\'' +
                 ", author=" + author +
                 '}';
     }

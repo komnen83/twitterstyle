@@ -21,13 +21,15 @@ public class MySQLTweetDao extends AbstractMySQLDao implements TweetDao {
         hibernateUtil.delete(Tweet.class, tweetId);
     }
 
+    @Override
     public List<Tweet> getUserTweets(AppUser user) {
-        TypedQuery<Tweet> query = em.createQuery("select t from Tweet t where t.author = :login", Tweet.class);
+        TypedQuery<Tweet> query = em.createQuery("select t from Tweet t where t.author= :login",  Tweet.class);
         query.setParameter("login", user.getLogin());
         return query.getResultList();
     }
 
+    @Override
     public Optional<Tweet> getTweet(Long id) {
-            return Optional.ofNullable(em.find(Tweet.class, id));
+        return Optional.ofNullable(em.find(Tweet.class, id));
     }
 }

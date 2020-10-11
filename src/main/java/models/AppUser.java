@@ -22,28 +22,20 @@ public class AppUser {
     @Column(name = "last_name")
     private String lastName;
     @CreationTimestamp
-    private Date registerdSince;
+    private Date registeredSince;
 
-    @ManyToMany(mappedBy = "following", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "following", cascade = {CascadeType.MERGE,  CascadeType.PERSIST}, fetch = FetchType.EAGER)
     private Set<AppUser> followers = new HashSet<>();
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.MERGE,  CascadeType.PERSIST}, fetch = FetchType.EAGER)
     @JoinTable(name = "follower_followed",
-    joinColumns = {@JoinColumn(name = "follower_fk")},
-    inverseJoinColumns = {@JoinColumn(name = "followed_fk")})
+            joinColumns = {@JoinColumn(name = "follower_fk")},
+            inverseJoinColumns = {@JoinColumn(name = "followed_fk")})
     private Set<AppUser> following = new HashSet<>();
 
     private boolean isActive;
 
     public AppUser() {
-    }
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setIsActive(boolean isActive) {
-        this.isActive = isActive;
     }
 
     public Long getId() {
@@ -94,12 +86,12 @@ public class AppUser {
         this.lastName = lastName;
     }
 
-    public Date getRegisterdSince() {
-        return registerdSince;
+    public Date getRegisteredSince() {
+        return registeredSince;
     }
 
-    public void setRegisterdSince(Date registerdSince) {
-        this.registerdSince = registerdSince;
+    public void setRegisteredSince(Date registeredSince) {
+        this.registeredSince = registeredSince;
     }
 
     public Set<AppUser> getFollowers() {
@@ -118,12 +110,20 @@ public class AppUser {
         this.following = following;
     }
 
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AppUser appUser = (AppUser) o;
-        return Objects.equals(id, appUser.id);
+        return id.equals(appUser.id);
     }
 
     @Override
@@ -138,15 +138,13 @@ public class AppUser {
                 ", login='" + login + '\'' +
                 ", email='" + email + '\'' +
                 ", name='" + name + '\'' +
-                ", password='" + password + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", registerdSince=" + registerdSince +
+                ", registeredSince=" + registeredSince +
                 ", followers=" + followers +
                 ", following=" + following +
                 ", active=" + isActive +
                 '}';
     }
-
     public static class UserBuilder {
         private String name;
         private String lastName;
@@ -190,7 +188,8 @@ public class AppUser {
             user.setName(this.name);
             user.setLastName(this.lastName);
             user.setEmail(this.email);
-            user.setIsActive(true);
+            user.setActive(true);
             return user;
-        }}
+        }
+    }
 }

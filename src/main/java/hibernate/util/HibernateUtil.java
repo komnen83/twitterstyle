@@ -7,14 +7,15 @@ import javax.persistence.Persistence;
 public class HibernateUtil {
 
     private static HibernateUtil instance;
-    private final EntityManagerFactory factory = Persistence.createEntityManagerFactory("myDatabase");
+    private final EntityManagerFactory factory =
+            Persistence.createEntityManagerFactory("myDatabase");
     private final EntityManager em = factory.createEntityManager();
 
     private HibernateUtil() {
     }
 
     public static HibernateUtil getInstance() {
-        if (instance == null) {
+        if (null == instance) {
             instance = new HibernateUtil();
         }
         return instance;

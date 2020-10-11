@@ -16,8 +16,8 @@
                       value="jdbc:mysql://localhost:3306/twitter_style?useLegacyDatetimeCode=false&amp;serverTimezone=Europe/Warsaw&amp;useSSL=false&amp;allowPublicKeyRetrieval=true"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
             <property name="hibernate.jdbc.time_zone" value="Europe/Warsaw"/>
-            <!--     <property name="hibernate.hbm2ddl.auto" value="update"/>-->
-            <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+                 <property name="hibernate.hbm2ddl.auto" value="update"/>
+<!--            <property name="hibernate.hbm2ddl.auto" value="create-drop"/>-->
             <property name = "hibernate.show_sql" value = "true" />
         </properties>
     </persistence-unit>

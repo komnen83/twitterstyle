@@ -14,5 +14,4 @@ public interface TweetDao {
     List<Tweet> getUserTweets(AppUser user);
 
     Optional<Tweet> getTweet(Long id);
-
 }

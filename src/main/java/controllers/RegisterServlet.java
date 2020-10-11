@@ -53,5 +53,6 @@ public class RegisterServlet extends HttpServlet {
         service.registerUser(user);
 
         req.getRequestDispatcher("/login.jsp").forward(req, resp);
+
     }
 }

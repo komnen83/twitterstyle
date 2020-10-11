@@ -1,7 +1,6 @@
 package errors;
 
 public class ValidationError {
-
     private String header;
     private String message;
 
@@ -10,11 +9,20 @@ public class ValidationError {
         this.message = message;
     }
 
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     public String getHeader() {
         return header;
     }
 
-    public String getMessage() {
-        return message;
+    public void setHeader(String header) {
+        this.header = header;
     }
 }
+
