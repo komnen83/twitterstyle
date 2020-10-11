@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class MySQLTweetDao extends AbstractMySQLDao implements TweetDao {
+
     @Override
     public void save(Tweet tweet) {
         hibernateUtil.save(tweet);

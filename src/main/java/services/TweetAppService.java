@@ -2,6 +2,7 @@ package services;
 
 import errors.ValidationError;
 import models.AppUser;
+import models.Tweet;
 
 import java.util.HashSet;
 import java.util.List;
@@ -21,4 +22,8 @@ public interface TweetAppService {
     HashSet<AppUser> getNotFollowedUsers(AppUser user);
 
     HashSet<AppUser> getFollowers(AppUser user);
+
+    List<Tweet> getUserTweets(AppUser user);
+
+    void addTweet(String authorLogin, String message);
 }
